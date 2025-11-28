@@ -1,15 +1,17 @@
 const express = require('express');
 const mysql = require('mysql2/promise');
 const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
 const PORT = 3000;
+const HOST = '0.0.0.0'; 
 
 const dbConfig = {
-    host: 'localhost',
-    user: 'root',
-    password: 'Leoadrieledu3564@', 
-    database: 'enquete_db'
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD, 
+    database: process.env.DB_DATABASE || 'enquete_db'
 };
 
 app.use(cors()); 
@@ -60,6 +62,6 @@ app.post('/api/votar', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, HOST, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
